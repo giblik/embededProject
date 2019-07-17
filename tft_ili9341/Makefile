@@ -24,11 +24,13 @@ NO_ECHO := @
 C_SOURCE_FILES += \
 $(abspath tft_display/ili9341_ll.c) \
 $(abspath main.c) \
+$(abspath ../avr_driver/serial/serial.c) \
 
 #includes common to all targets
 INC_PATHS  = -I$(C_INCLUDE_PATH)
 INC_PATHS += -I$(abspath ./tft_display)
 INC_PATHS += -I$(abspath ../avr_driver)
+INC_PATHS += -I$(abspath ../avr_driver/serial)
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
