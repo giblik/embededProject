@@ -22,9 +22,10 @@ NO_ECHO := @
 
 #source common to all targets
 C_SOURCE_FILES += \
-$(abspath tft_display/ili9341_ll.c) \
 $(abspath main.c) \
 $(abspath ../avr_driver/serial/serial.c) \
+$(abspath tft_display/ili9341_ll.c) \
+$(abspath tft_display/tft_gfx.c) \
 
 #includes common to all targets
 INC_PATHS  = -I$(C_INCLUDE_PATH)
