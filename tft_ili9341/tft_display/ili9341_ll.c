@@ -299,3 +299,33 @@ void tft_ll_fill_area(point_t a, point_t b, color_t color)
     CS_HI();
 }
 
+void tft_ll_char_write(point_t *p_point, color_t color, uint8_t *p_buff, uint8_t size)
+{
+    set_col(p_point->x, p_point->x + size-1);
+    set_row(p_point->y, p_point->y + 16);
+
+    write_seq(ILI9341_MEMORYWRITE, 0);
+    CS_LO();
+    RS_DATA();
+
+    for(uint8_t a = 0; a < 2; a++)
+    {
+        for(uint8_t r = 0; r < 8; r++)
+        {
+            for(uint8_t  i = a; i < size*2; i+=2)
+            {
+                if (p_buff[i] & (1 << r))
+                {
+                    write_mem16(color);
+                }
+                else
+                {
+                    write_mem16(m_backgroung_color);
+                }
+            }
+        }
+    }
+
+    CS_HI();
+}
+

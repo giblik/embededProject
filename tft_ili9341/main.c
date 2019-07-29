@@ -10,6 +10,7 @@
 #include "serial.h"
 #include <string.h>
 #include "avr_gpio.h"
+#include "logger.h"
 
 #include <stdlib.h>
 
@@ -22,8 +23,12 @@ int main (void)
     serial_init();
     sei();
 
-    char buff[250] = "qwerty\n\r";
+    logget_set_observer((logger_observer_t)serial_send_block);
+
+    char buff[250];
+    sprintf(buff, "ok.\r\n");
     serial_send_block((uint8_t*)buff, strlen(buff));
+
     tft_display_init();
 
     // avr_gpio_pins_dir_set(LED_DDR, (1 << LED_PIN), AVR_GPIO_PIN_DIR_OUTPUT);
@@ -50,9 +55,14 @@ int main (void)
 
     tft_draw_rect(a, b, TFT_COLOR_RED);
 
+    log(LEVEL_INFO, "hello: %d", 1);
     for(;;)
     {
-        _delay_ms(50);
+        _delay_ms(1000);
+        for(char i = 32; i < 127; ++i)
+        {
+            tft_draw_char(i);
+        }
 
         // a.x = rand() % 240;
         // b.x = rand() % 240 + a.x;
@@ -61,11 +71,11 @@ int main (void)
         // rand_color = rand() % 0xFFFF + 0xFF00;
         // tft_ll_fill_area(a, b, rand_color);
 
-        point_info_t rand_p;
-        rand_p.x = rand() % 240;
-        rand_p.y = rand() % 320;
-        rand_p.color   = rand() % 0xFFFF + 0xFF00;
-        tft_ll_draw_pixel(rand_p);
+        // point_info_t rand_p;
+        // rand_p.x = rand() % 240;
+        // rand_p.y = rand() % 320;
+        // rand_p.color   = rand() % 0xFFFF + 0xFF00;
+        // tft_ll_draw_pixel(rand_p);
     }
     return 0;
 }

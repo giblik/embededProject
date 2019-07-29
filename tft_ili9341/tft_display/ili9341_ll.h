@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define TFT_WIDTH           240
+#define TFT_HEIGHT          320
 typedef enum
 {
     TFT_COLOR_BLACK       = 0x0000,
@@ -58,6 +60,6 @@ tft_display_id_t tft_ll_read_id(void);
 tft_display_status_t tft_ll_read_display_status(void);
 void tft_ll_draw_pixel(point_info_t point);
 void tft_ll_fill_area(point_t a, point_t b, color_t color);
-
+void tft_ll_char_write(point_t *p_point, color_t color, uint8_t *p_buff, uint8_t size);
 
 #endif /* ILI9341_LL_H__ */
